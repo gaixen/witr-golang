@@ -3,25 +3,25 @@
 package source
 
 import (
-  "strings"
+	"strings"
 
-  "github.com/pranshuparmar/witr/internal/launchd"
-  "github.com/pranshuparmar/witr/pkg/model"
+	"github.com/pranshuparmar/witr/internal/launchd"
+	"github.com/pranshuparmar/witr/pkg/model"
 )
 
 func detectLaunchd(ancestry []model.Process) *model.Source {
-  // Check if the ancestry includes launchd (PID 1)
-  hasLaunchd := false
-  for _, p := range ancestry {
-    if p.PID == 1 && p.Command == "launchd" {
-      hasLaunchd = true
-      break
-    }
-  }
+	// Check if the ancestry includes launchd (PID 1)
+	hasLaunchd := false
+	for _, p := range ancestry {
+		if p.PID == 1 && p.Command == "launchd" {
+			hasLaunchd = true
+			break
+		}
+	}
 
-  if !hasLaunchd {
-    return nil
-  }
+	if !hasLaunchd {
+		return nil
+	}
 
   // Get the target process (last in ancestry)
   if len(ancestry) == 0 {
@@ -40,32 +40,32 @@ func detectLaunchd(ancestry []model.Process) *model.Source {
     }
   }
 
-  // Build the source with details
-  source := &model.Source{
-    Type:       model.SourceLaunchd,
-    Name:       info.Label,
-    Confidence: 0.95,
-    Details:    make(map[string]string),
-  }
+	// Build the source with details
+	source := &model.Source{
+		Type:       model.SourceLaunchd,
+		Name:       info.Label,
+		Confidence: 0.95,
+		Details:    make(map[string]string),
+	}
 
-  // Add domain description (Launch Agent vs Launch Daemon)
-  source.Details["type"] = info.DomainDescription()
+	// Add domain description (Launch Agent vs Launch Daemon)
+	source.Details["type"] = info.DomainDescription()
 
-  // Add plist path if found
-  if info.PlistPath != "" {
-    source.Details["plist"] = info.PlistPath
-  }
+	// Add plist path if found
+	if info.PlistPath != "" {
+		source.Details["plist"] = info.PlistPath
+	}
 
-  // Add triggers
-  triggers := info.FormatTriggers()
-  if len(triggers) > 0 {
-    source.Details["triggers"] = strings.Join(triggers, "; ")
-  }
+	// Add triggers
+	triggers := info.FormatTriggers()
+	if len(triggers) > 0 {
+		source.Details["triggers"] = strings.Join(triggers, "; ")
+	}
 
-  // Add KeepAlive status
-  if info.KeepAlive {
-    source.Details["keepalive"] = "Yes (restarts if killed)"
-  }
+	// Add KeepAlive status
+	if info.KeepAlive {
+		source.Details["keepalive"] = "Yes (restarts if killed)"
+	}
 
-  return source
+	return source
 }
