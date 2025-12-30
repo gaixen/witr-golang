@@ -28,7 +28,7 @@ func detectLaunchd(ancestry []model.Process) *model.Source {
     return nil
   }
   target := ancestry[len(ancestry)-1]
-
+	// TODO: Confidence key value is hardcoded.
   // Try to get detailed launchd info for the target process
   info, err := launchd.GetLaunchdInfo(target.PID)
   if err != nil {

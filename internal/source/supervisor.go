@@ -27,6 +27,7 @@ var knownSupervisors = map[string]string{
 	"docker-init":  "docker-init",
 }
 
+// TODO: Confidence key value is hardcoded.
 func detectSupervisor(ancestry []model.Process) *model.Source {
 	for _, p := range ancestry {
 		// Normalize: remove spaces, lowercase

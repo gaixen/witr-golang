@@ -9,6 +9,7 @@ var shells = map[string]bool{
 	"fish": true,
 }
 
+// TODO: Confidence key value is hardcoded.
 func detectShell(ancestry []model.Process) *model.Source {
 	for _, p := range ancestry {
 		if shells[p.Command] {
