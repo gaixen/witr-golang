@@ -8,7 +8,7 @@ var shells = map[string]bool{
 	"sh":   true,
 	"fish": true,
 }
-
+// TODO: Confidence hardcoded, improve detection logic to increase confidence
 func detectShell(ancestry []model.Process) *model.Source {
 	for _, p := range ancestry {
 		if shells[p.Command] {

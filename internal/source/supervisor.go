@@ -38,7 +38,7 @@ var knownSupervisors = map[string]string{
 	"forever":      "forever",
 	"nssm":         "nssm",
 }
-
+// TODO: Confidence hardcoded, improve detection logic to increase confidence
 func detectSupervisor(ancestry []model.Process) *model.Source {
 	for _, p := range ancestry {
 		// Normalize: remove spaces, lowercase

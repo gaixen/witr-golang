@@ -8,7 +8,7 @@ import (
 	"github.com/pranshuparmar/witr/internal/launchd"
 	"github.com/pranshuparmar/witr/pkg/model"
 )
-
+// TODO: Confidence hardcoded, improve detection logic to increase confidence
 func detectLaunchd(ancestry []model.Process) *model.Source {
 	// Check if the ancestry includes launchd (PID 1)
 	hasLaunchd := false

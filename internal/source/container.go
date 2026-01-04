@@ -7,7 +7,7 @@ import (
 
 	"github.com/pranshuparmar/witr/pkg/model"
 )
-
+// TODO: Confidence hardcoded, improve detection logic to increase confidence
 func detectContainer(ancestry []model.Process) *model.Source {
 	for _, p := range ancestry {
 		data, err := os.ReadFile("/proc/" + itoa(p.PID) + "/cgroup")

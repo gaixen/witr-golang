@@ -3,7 +3,7 @@
 package source
 
 import "github.com/pranshuparmar/witr/pkg/model"
-
+// TODO: Confidence hardcoded, improve detection logic to increase confidence
 func detectSystemd(ancestry []model.Process) *model.Source {
 	for _, p := range ancestry {
 		if p.PID == 1 && p.Command == "systemd" {
